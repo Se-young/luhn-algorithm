@@ -1,0 +1,49 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class LuhnTest {
+	
+	private int[] cardNumber;
+	
+	@Before
+	public void setCardNumber() {
+		Card card = new Card(new int[] {9,4,4,0,0,3,8,2,1,7,5,0,6,3,1,9});
+		cardNumber = card.getNumber();
+	}
+	
+
+	@Test
+	public void testEvenNumberMultipleTwo() {
+
+		Card card = new Card(cardNumber);
+		int[] result = {18,4,8,0,0,3,16,2,2,7,10,0,12,3,2,9};
+		
+		assertTrue(Arrays.equals(result, card.getEvenNumMultipleTwo()));
+	}
+	
+	@Test
+	public void testSumCardNumber() {
+		
+		Card card = new Card(cardNumber);
+		card.setNum(card.getEvenNumMultipleTwo());
+		
+		assertEquals(51, card.getSum());
+	}
+	
+	@Test
+	public void testGetNextTenMultiple() {
+		
+		Card card = new Card(cardNumber);
+		card.setNum(card.getEvenNumMultipleTwo());
+		
+		int sum = card.getSum();
+		int[] cardArray = card.getNumber();
+		
+		assertEquals(card.nextTenNum(sum), card.getNumber()[cardArray.length-1]);
+	}
+}
